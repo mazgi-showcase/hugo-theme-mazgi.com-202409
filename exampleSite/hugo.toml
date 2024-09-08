@@ -1,0 +1,61 @@
+# baseURL = "https://example.org/"
+# buildDrafts = true
+copyright = '© The Theme Author.'
+defaultContentLanguage = "en-US"
+defaultContentLanguageInSubdir = true
+enableEmoji = true
+enableGitInfo = false
+enableRobotsTXT = true
+hasCJKLanguage = true
+languageCode = 'en-US'
+theme = "default"
+title = 'example.org'
+
+[languages]
+  [languages.en-US]
+    languageCode = 'en-US'
+    languageName = 'English'
+    [languages.en-US.params]
+      shortLanguageName = 'En'
+    [languages.en-US.menus]
+      [[languages.en-US.menus.main]]
+        name = 'Creations'
+        pageRef = '/creations'
+        weight = 10
+      [[languages.en-US.menus.main]]
+        name = 'Technologies'
+        pageRef = '/technologies'
+        weight = 10
+      [[languages.en-US.menus.main]]
+        name = 'Lifelogs'
+        pageRef = '/lifelogs'
+        weight = 10
+  [languages.ja-JP]
+    languageCode = 'ja-JP'
+    languageName = '日本語'
+    [languages.ja-JP.params]
+      shortLanguageName = 'Ja'
+    [languages.ja-JP.menus]
+      [[languages.ja-JP.menus.main]]
+        name = 'Creations'
+        pageRef = '/creations'
+        weight = 10
+      [[languages.ja-JP.menus.main]]
+        name = 'Technologies'
+        pageRef = '/technologies'
+        weight = 10
+      [[languages.ja-JP.menus.main]]
+        name = 'Lifelogs'
+        pageRef = '/lifelogs'
+        weight = 10
+
+[module]
+  [module.hugoVersion]
+    extended = true
+    min = "0.129.0"
+
+[pagination]
+pagerSize = 12
+
+[params.sass]
+transpiler = 'dartsass'

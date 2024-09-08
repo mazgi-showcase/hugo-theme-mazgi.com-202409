@@ -1,0 +1,13 @@
+{{- $page := . }}
+
+{{- with $page.GetTerms "tags" }}
+  <ul>
+    {{- $len:= len . }}
+    {{- range $idx, $el := . }}
+      <li>
+        <a href="{{ $el.RelPermalink }}">#{{ $el.LinkTitle }}</a>
+        {{- if lt (add $idx 1) $len }},{{ end }}
+      </li>
+    {{- end }}
+  </ul>
+{{- end }}

@@ -1,0 +1,24 @@
+{{ $opts := dict
+  "transpiler" "dartsass"
+}}
+{{ $csses := resources.Match "css/*.css" }}
+{{ range resources.Match "css/*.scss" }}
+  {{ with . | toCSS $opts }}
+    {{ $csses = $csses | append . }}
+  {{ end }}
+{{ end }}
+{{ $bundledCSS := $csses | resources.Concat "css/bundled.css" }}
+{{ with $bundledCSS }}
+  {{ if hugo.IsDevelopment }}
+    <link rel="stylesheet" href="{{ .RelPermalink }}" />
+  {{ else }}
+    {{ with . | minify | fingerprint }}
+      <link
+        rel="stylesheet"
+        href="{{ .RelPermalink }}"
+        integrity="{{ .Data.Integrity }}"
+        crossorigin="anonymous"
+      />
+    {{ end }}
+  {{ end }}
+{{ end }}

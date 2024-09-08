@@ -1,0 +1,9 @@
+{{- $page := .page }}
+{{- $positionID := .positionID }}
+
+{{- with $page }}
+  <div class="content-container {{ $positionID }}">
+    {{ partial "menu.html" (dict "menuID" "main" "page" .) }}
+    {{ partial "language-selector.html" . }}
+  </div>
+{{- end }}

@@ -1,0 +1,53 @@
+{{- define "main" }}
+  <div class="content-information-container">
+    <h1>{{ .Title }}</h1>
+    <section class="description">
+      {{ .Content }}
+    </section>
+  </div>
+  <div class="pagination top">
+    {{ template "_internal/pagination.html" . }}
+  </div>
+  <div class="main-article-list">
+    {{- range .Paginator.Pages }}
+      {{- $images := partial "_funcs/get-page-images" . }}
+      <div class="capsulized-article">
+        <div
+          class="background"
+          {{- with index $images 0 }}
+            {{- /* https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/partials/_funcs/get-page-images.html */}}
+            {{ printf "style=\"background-image: url(%s);\"" .RelPermalink | safeHTMLAttr }}
+          {{- end }}
+        ></div>
+        <div class="content">
+          {{- $dateMachine := .Date | time.Format "2006-01-02T15:04:05-07:00" }}
+          {{- $dateHuman := .Date | time.Format ":date_long" }}
+          <p class="published-date">
+            <time
+              datetime="
+              {{ $dateMachine }}"
+              >{{ $dateHuman }}</time
+            >
+          </p>
+          <div class="summary-with-title">
+            <h2 class="title">
+              <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+            </h2>
+            <span class="summary">
+              {{ .Summary }}
+            </span>
+          </div>
+          {{- if (isset .Params "authors") }}
+            <div class="authors">
+              <label>Authors:</label>{{ partial "authors.html" . }}
+            </div>
+          {{- end }}
+          <div class="tags">{{ partial "tags.html" . }}</div>
+        </div>
+      </div>
+    {{- end }}
+  </div>
+  <div class="pagination bottom">
+    {{ template "_internal/pagination.html" . }}
+  </div>
+{{- end }}

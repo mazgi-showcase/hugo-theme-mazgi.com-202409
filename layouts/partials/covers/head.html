@@ -1,0 +1,5 @@
+{{- range (or (.Param "page.head.fonts") slice) }}
+  <link rel="stylesheet" href="{{ .href }}" />
+{{- end }}
+{{ partial "covers/head/css.html" . }}
+{{ partial "covers/head/js.html" . }}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html
+  lang="{{ or site.Language.LanguageCode `en-US` }}"
+  dir="{{ or site.Language.LanguageDirection `ltr` }}"
+>
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body>
+    <div class="whole-world">
+      <header>
+        {{ partial "header.html" . }}
+      </header>
+      <nav class="top">
+        {{ partial "nav.html" (dict "positionID" "top" "page" .) }}
+      </nav>
+      <section class="main-section">
+        <main>
+          {{ block "main" . }}{{ end }}
+        </main>
+      </section>
+      <footer>
+        {{ partial "footer.html" . }}
+      </footer>
+      <nav class="bottom">
+        {{ partial "nav.html" (dict "positionID" "bottom" "page" .) }}
+      </nav>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html
+  lang="{{ or site.Language.LanguageCode `en-US` }}"
+  dir="{{ or site.Language.LanguageDirection `ltr` }}"
+>
+  <head>
+    {{ partial "covers/head.html" . }}
+    {{ partial "head.html" . }}
+    {{- with . }}
+      {{ $url := .Site.BaseURL }}
+      {{ $sec := .Param "page.head.refresh" | cast.ToInt }}
+      <meta
+        http-equiv="refresh"
+        content="{{ math.Max 1 $sec }}; url={{ $url }}"
+      />
+    {{- end }}
+  </head>
+  <body>
+  {{- if .Params.page.body.in_the_world  }}
+    <div class="whole-world">
+  {{- end }}
+    {{- if .Params.page.body.header }}
+      <header>
+        {{ partial "header.html" . }}
+      </header>
+    {{- end }}
+    {{- if .Params.page.body.navigation }}
+      <nav class="top">
+        {{ partial "nav.html" (dict "positionID" "top" "page" .) }}
+      </nav>
+    {{- end }}
+    <section class="main-section">
+      <main>
+        {{ block "main" . }}{{ end }}
+      </main>
+    </section>
+    {{- if .Params.page.body.footer }}
+      <footer>
+        {{ partial "footer.html" . }}
+      </footer>
+    {{- end }}
+    {{- if .Params.page.body.navigation }}
+      <nav class="bottom">
+        {{ partial "nav.html" (dict "positionID" "bottom" "page" .) }}
+      </nav>
+    {{- end }}
+  {{- if .Params.page.body.in_the_world  }}
+    </div>
+  {{- end }}
+  </body>
+</html>

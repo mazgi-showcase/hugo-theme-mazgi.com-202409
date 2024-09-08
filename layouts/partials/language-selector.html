@@ -1,0 +1,33 @@
+{{- with . }}
+  {{- $page := . }}
+  {{- if .Site.IsMultiLingual }}
+    <div class="language-selector">
+      <select>
+        {{- range .AllTranslations }}
+          <option
+            data-href="{{ .RelPermalink }}"
+            value="{{ .Language.LanguageCode }}"
+            {{- if eq $page.Site.Language.LanguageCode .Language.LanguageCode }}
+              selected
+            {{ end }}
+          >
+            {{ .Language.LanguageName }}
+          </option>
+        {{- end }}
+      </select>
+      <select class="short">
+        {{- range .AllTranslations }}
+          <option
+            data-href="{{ .RelPermalink }}"
+            value="{{ .Language.LanguageCode }}"
+            {{- if eq $page.Site.Language.LanguageCode .Language.LanguageCode }}
+              selected
+            {{ end }}
+          >
+            {{ .Language.Params.shortLanguageName }}
+          </option>
+        {{- end }}
+      </select>
+    </div>
+  {{- end }}
+{{- end }}

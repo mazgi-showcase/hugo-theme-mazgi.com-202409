@@ -1,0 +1,24 @@
+{{- if (isset .Params "id") }}
+  {{- $coverId := (.Param "id") }}
+  {{- $csses := resources.Match (printf "covers/%s/css/*.css" $coverId) }}
+  {{- range resources.Match (printf "covers/%s/scss/*.scss" $coverId) }}
+    {{- with . | toCSS }}
+      {{- $csses = $csses | append . }}
+    {{- end }}
+  {{- end }}
+  {{- $bundledCSS := $csses | resources.Concat (printf "css/covers/%s/bundled.css" $coverId) }}
+  {{- with $bundledCSS }}
+    {{- if hugo.IsDevelopment }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" />
+    {{- else }}
+      {{- with . | minify | fingerprint }}
+        <link
+          rel="stylesheet"
+          href="{{ .RelPermalink }}"
+          integrity="{{ .Data.Integrity }}"
+          crossorigin="anonymous"
+        />
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}

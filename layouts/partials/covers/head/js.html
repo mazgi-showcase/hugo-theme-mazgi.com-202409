@@ -1,0 +1,26 @@
+{{- if (isset .Params "id") }}
+  {{- $coverId := (.Param "id") }}
+  {{- $jses := resources.Match (printf "covers/%s/js/*.js" $coverId) }}
+  {{- range resources.Match (printf "covers/%s/ts/*.ts" $coverId) }}
+    {{- with . | js.Build }}
+      {{ $jses = $jses | append . }}
+    {{- end }}
+  {{- end }}
+  {{- $bundledJS := $jses | resources.Concat (printf "js/covers/%s/bundled.js" $coverId) }}
+  {{- with $bundledJS }}
+    {{- if eq hugo.Environment "development" }}
+      {{- with . | js.Build }}
+        <script src="{{ .RelPermalink }}"></script>
+      {{- end }}
+    {{- else }}
+      {{- $opts := dict "minify" true }}
+      {{- with . | js.Build $opts | fingerprint }}
+        <script
+          src="{{ .RelPermalink }}"
+          integrity="{{- .Data.Integrity }}"
+          crossorigin="anonymous"
+        ></script>
+      {{- end }}
+    {{- end }}
+  {{- end }}
+{{- end }}

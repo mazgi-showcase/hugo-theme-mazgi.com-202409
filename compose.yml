@@ -1,0 +1,43 @@
+# ================
+# Services
+services:
+  # ----------------
+  # The Builders for building and showing content in the development environment.
+  hugo-static-website-content-builder-development:
+    build:
+      args:
+        GID: ${GID:-0}
+        UID: ${UID:-0}
+      context: Dockerfile.d/hugo-static-website
+      dockerfile: Dockerfile
+    command:
+      - zsh
+      - --login
+      - -c
+      - |
+        hugo server\
+         --appendPort\
+         --baseURL=http://$${HUGO_SERVER_FQDN}\
+         --bind 0.0.0.0\
+         --cleanDestinationDir\
+         --disableFastRender\
+         --ignoreCache\
+         --logLevel=debug\
+         --noHTTPCache\
+         --port=$${HUGO_SERVER_PORT}\
+         --printMemoryUsage\
+         --renderToMemory\
+         --templateMetrics\
+         --templateMetricsHints\
+         --verbose\
+         --watch
+    environment:
+      HUGO_SERVER_FQDN: ${HUGO_SERVER_FQDN:-127.0.0.1}
+      HUGO_SERVER_PORT: ${HUGO_SERVER_PORT:-1313}
+    init: true
+    ports:
+      - "${HUGO_SERVER_PORT:-1313}:1313"
+    user: "${UID:-0}:${GID:-0}"
+    volumes:
+      - .:/workspace
+    working_dir: /workspace/exampleSite

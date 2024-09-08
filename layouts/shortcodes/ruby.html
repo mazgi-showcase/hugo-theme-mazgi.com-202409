@@ -1,0 +1,5 @@
+<ruby {{ with .Get 1 }}lang="{{ . }}"{{ end }}>
+  <span>{{- .Inner }}</span>
+  <rp>(</rp><rt {{ with .Get 2 }}lang="{{ . }}"{{ end }}>{{- .Get 0 -}}</rt
+  ><rp>)</rp> </ruby
+>{{- "" -}}

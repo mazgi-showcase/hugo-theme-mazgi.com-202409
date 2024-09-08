@@ -1,0 +1,18 @@
+<div class="content-container">
+  <section class="copyright">
+    <p>{{ .Site.Copyright }}</p>
+  </section>
+  <section class="powered-by">
+    <p>Powered by <a href="https://gohugo.io/">Hugo</a></p>
+  </section>
+  <section class="gitinfo">
+    <p>
+      rev.
+      {{ with .GitInfo }}
+        {{ .AbbreviatedHash }}
+      {{ else }}
+        (undefined)
+      {{ end }}
+    </p>
+  </section>
+</div>

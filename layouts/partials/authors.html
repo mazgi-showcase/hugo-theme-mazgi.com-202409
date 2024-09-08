@@ -1,0 +1,17 @@
+{{- $page := . }}
+
+{{- with $page.Param "authors" }}
+  <ul>
+    {{- $len:= len . }}
+    {{- range $idx, $el := . }}
+      {{- $name := $el.name }}
+      {{- $url := default "https://example.invalid/themes/default/layouts/partials/authors.html" $el.url }}
+      {{- $sep := and (gt $len 1) (lt (add $idx 1) $len) }}
+      <li>
+        {{/* prettier-ignore-start */}}
+        <span><a href="{{ $url }}">{{ $name }}</a>{{- if $sep }}&nbsp;/&nbsp;{{ end }}</span>
+        {{/* prettier-ignore-end */}}
+      </li>
+    {{- end }}
+  </ul>
+{{- end }}
